@@ -3,7 +3,14 @@
  * This replaces JUnit tests for environments without JUnit support.
  *
  * AP CSA – Arrays & OOP Practice
+ * 
+ * NOTE: Used Ai because given WeeklyDataTest.java did not work
+ * 
+ * @author Rin Ryu
+ * @collaborators ChatGPT
+ * @version 1/22/2026
  */
+
 public class WeeklyDataTest {
 
     public static void main(String[] args) {
