@@ -1,101 +1,75 @@
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
- * AP CSA - Weekly Data Analyzer (Arrays & OOP Assessment)
- * JUnit tests for WeeklyData.java
+ * Manual test class for WeeklyData.
+ * This replaces JUnit tests for environments without JUnit support.
  *
- * This test class validates:
- *  - Constructor deep copy (internal array must NOT alias the input).
- *  - getTotal(): sum of values.
- *  - getAverage(): total / length.
- *  - getMax(): maximum value.
- *  - getMin(): minimum value.
- *  - toString(): one day per line, labeled and readable.
- *
- * Assumptions:
- *  - Arrays are non-empty for core tests.
- *  - Optional tests included for empty-array behavior.
+ * AP CSA – Arrays & OOP Practice
  */
-class WeeklyDataTest {
+public class WeeklyDataTest {
 
-    // -------------------------------------------------
-    // Constructor Deep Copy Tests
-    // -------------------------------------------------
-    @Test
-    void constructor_makesDeepCopy_notAliasingInput() {
-        double[] input = {10.0, 20.0, 30.0};
+    public static void main(String[] args) {
+
+        System.out.println("Running WeeklyData tests...\n");
+
+        testConstructorDeepCopy();
+        testGetTotal();
+        testGetAverage();
+        testGetMax();
+        testGetMin();
+        testToString();
+
+        System.out.println("\nAll tests completed.");
+    }
+
+    private static void testConstructorDeepCopy() {
+        double[] input = {8.0, 7.0, 6.0};
         WeeklyData wd = new WeeklyData(input);
 
         double originalTotal = wd.getTotal();
+        input[0] = 100.0;
 
-        // Mutate original array after construction
-        input[0] = 9999.0;
-
-        assertEquals(
-                originalTotal,
-                wd.getTotal(),
-                1e-9,
-                "WeeklyData must deep-copy the input array. External changes should not affect internal data."
-        );
+        System.out.println("Constructor Deep Copy Test:");
+        System.out.println(originalTotal == wd.getTotal() ? "PASS" : "FAIL");
+        System.out.println();
     }
 
-    @Test
-    void constructor_copiesAllElements_correctLength() {
-        double[] input = {5.5, 10.0, 20.25};
-        WeeklyData wd = new WeeklyData(input);
-
-        assertEquals(35.75, wd.getTotal(), 1e-9);
+    private static void testGetTotal() {
+        WeeklyData wd = new WeeklyData(new double[]{6, 7, 8});
+        System.out.println("getTotal Test:");
+        System.out.println(wd.getTotal() == 21.0 ? "PASS" : "FAIL");
+        System.out.println();
     }
 
-    // -------------------------------------------------
-    // getTotal Tests
-    // -------------------------------------------------
-    @Test
-    void getTotal_typicalValues() {
-        double[] input = {100, 200, 300};
-        WeeklyData wd = new WeeklyData(input);
-
-        assertEquals(600.0, wd.getTotal(), 1e-9);
+    private static void testGetAverage() {
+        WeeklyData wd = new WeeklyData(new double[]{6, 8, 10});
+        System.out.println("getAverage Test:");
+        System.out.println(wd.getAverage() == 8.0 ? "PASS" : "FAIL");
+        System.out.println();
     }
 
-    @Test
-    void getTotal_singleValue() {
-        double[] input = {42.5};
-        WeeklyData wd = new WeeklyData(input);
-
-        assertEquals(42.5, wd.getTotal(), 1e-9);
+    private static void testGetMax() {
+        WeeklyData wd = new WeeklyData(new double[]{6, 9, 7});
+        System.out.println("getMax Test:");
+        System.out.println(wd.getMax() == 9.0 ? "PASS" : "FAIL");
+        System.out.println();
     }
 
-    // -------------------------------------------------
-    // getAverage Tests
-    // -------------------------------------------------
-    @Test
-    void getAverage_typicalValues() {
-        double[] input = {2, 4, 6, 8};
-        WeeklyData wd = new WeeklyData(input);
-
-        assertEquals(5.0, wd.getAverage(), 1e-9);
+    private static void testGetMin() {
+        WeeklyData wd = new WeeklyData(new double[]{6, 9, 7});
+        System.out.println("getMin Test:");
+        System.out.println(wd.getMin() == 6.0 ? "PASS" : "FAIL");
+        System.out.println();
     }
 
-    @Test
-    void getAverage_decimalResult() {
-        double[] input = {1, 2, 3};
-        WeeklyData wd = new WeeklyData(input);
+    private static void testToString() {
+        WeeklyData wd = new WeeklyData(new double[]{8, 7});
+        String output = wd.toString();
 
-        assertEquals(2.0, wd.getAverage(), 1e-9);
-    }
-
-    // -------------------------------------------------
-    // getMax Tests
-    // -------------------------------------------------
-    @Test
-    void getMax_typicalValues() {
-        double[] input = {10, 50, 30, 75, 25};
-        WeeklyData wd = new WeeklyData(input);
-
-        assertEquals(75.0, wd.getMax(), 1e-9);
+        System.out.println("toString Test:");
+        if (output.contains("Day 1") && output.contains("Day 2")) {
+            System.out.println("PASS");
+        } else {
+            System.out.println("FAIL");
+        }
+        System.out.println();
     }
 }

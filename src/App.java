@@ -1,11 +1,10 @@
 import java.util.Scanner;
 
 /**
- * Instructions:
- * - Complete the WeeklyData.java class first.
- * - Use this App class to collect user input and test your WeeklyData methods.
- * - Follow all TODOs carefully.
- * - Do NOT hard-code values — use loops and method calls.
+ * Main application class for the Weekly Sleep Analyzer.
+ * Collects user input and displays sleep statistics.
+ *
+ * AP CSA – Arrays & OOP Practice
  */
 public class App {
 
@@ -14,84 +13,74 @@ public class App {
         // -------------------------------------------------------------
         // TODO 1: Create a Scanner for user input
         // -------------------------------------------------------------
-        Scanner input = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
+
 
         // -------------------------------------------------------------
         // TODO 2: Give information about your program
-        //         Ask the user about their goals (if applicable)
         // -------------------------------------------------------------
-        System.out.println("Weekly Sleep Data Analyzer");
-        System.out.println("This program analyzes how many hours you slept this week.");
-        System.out.println("Enter your sleep hours for each day.\n");
+        System.out.println("Weekly Sleep Analyzer");
+        System.out.println("Enter the number of hours you slept each day.\n");
+
 
         // -------------------------------------------------------------
-        // TODO 3: Create an array to hold 7 days of data
-        //         Use an appropriate data type (int or double)
-        //         Name the array weekData
+        // TODO 3: Create an array to hold 7 days of sleep data
         // -------------------------------------------------------------
         double[] weekData = new double[7];
 
+
         // -------------------------------------------------------------
-        // TODO 4: Use a for loop to collect data for each day of the week
-        //         Prompt example:
-        //         "Enter <data type> for day X: "
-        //
-        //         Include input validation:
-        //         - Use a while loop to prevent negative values
-        //         - Re-prompt if the value is invalid
+        // TODO 4: Collect sleep data with validation
         // -------------------------------------------------------------
         for (int i = 0; i < weekData.length; i++) {
-            System.out.print("Enter the number of hours you slept for Day " + (i + 1) + ": ");
-            double hours = input.nextDouble();
+            double hours;
 
-            while (hours < 0 || hours > 24) {
-                System.out.print("Invalid input. Enter a value between 0 and 24: ");
-                hours = input.nextDouble();
+            while (true) {
+                System.out.print("Enter hours slept for day " + (i + 1) + ": ");
+                hours = scanner.nextDouble();
+
+                if (hours >= 0 && hours <= 24) {
+                    break;
+                }
+                System.out.println("Invalid input. Hours must be between 0 and 24.");
             }
 
             weekData[i] = hours;
         }
 
+
         // -------------------------------------------------------------
         // TODO 5: Create a WeeklyData object
-        //         Pass the weekData array into the constructor
         // -------------------------------------------------------------
-        WeeklyData sleepData = new WeeklyData(weekData);
+        WeeklyData sleepWeek = new WeeklyData(weekData);
+
 
         // -------------------------------------------------------------
-        // TODO 6: Display the results of the analysis
-        //         Call methods from WeeklyData to display:
-        //         - Total
-        //         - Average
-        //         - Minimum
-        //         - Maximum
-        //
-        //         Use clear labels and formatted output if needed
+        // TODO 6: Display analysis results
         // -------------------------------------------------------------
-        System.out.println("\nWeekly Sleep Analysis:");
-        System.out.println("Total hours slept: " + sleepData.getTotal());
-        System.out.println("Average hours per night: " + sleepData.getAverage());
-        System.out.println("Most sleep in one night: " + sleepData.getHighest());
-        System.out.println("Least sleep in one night: " + sleepData.getLowest());
+        System.out.println("\n--- Sleep Summary ---");
+        System.out.printf("Total sleep: %.2f hours%n", sleepWeek.getTotal());
+        System.out.printf("Average sleep: %.2f hours/night%n", sleepWeek.getAverage());
+        System.out.printf("Most sleep in one day: %.2f hours%n", sleepWeek.getMax());
+        System.out.printf("Least sleep in one day: %.2f hours%n", sleepWeek.getMin());
+
 
         // -------------------------------------------------------------
-        // TODO 7: Display the full week of data
-        //         Use the toString() method from WeeklyData
+        // TODO 7: Display full week of data
         // -------------------------------------------------------------
-        System.out.println("\nSleep Log:");
-        System.out.println(sleepData.toString());
+        System.out.println("\n--- Daily Breakdown ---");
+        System.out.println(sleepWeek);
+
 
         // -------------------------------------------------------------
-        // TODO 8: Give the user insights about their week
-        //         --> "You need to drink more water next week!"
-        //         --> "You were very hydrated this week!"
-        //         --> etc.
+        // TODO 8: Give user insights
         // -------------------------------------------------------------
-        if (sleepData.getAverage() < 7) {
-            System.out.println("You should try to get more sleep next week for better health and focus.");
+        if (sleepWeek.getAverage() < 7) {
+            System.out.println("Insight: You should try to get more sleep next week!");
         } else {
-            System.out.println("Great job! You are getting a healthy amount of sleep.");
+            System.out.println("Insight: Great job maintaining healthy sleep habits!");
         }
 
+        scanner.close();
     }
 }

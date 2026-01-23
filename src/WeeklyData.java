@@ -1,40 +1,39 @@
 /**
- * The WeeklyData class stores and analyzes a week’s worth of numeric data.
- * This could represent steps taken, hours of sleep, money spent, screen time,
- * or any other measurable daily value.
+ * The WeeklyData class stores and analyzes a week’s worth of sleep data.
+ * Each value represents the number of hours slept on a given day.
+ *
+ * This class provides methods to calculate:
+ * - total sleep hours
+ * - average sleep per night
+ * - maximum sleep in a day
+ * - minimum sleep in a day
+ *
+ * AP CSA – Arrays & OOP Practice
  */
 public class WeeklyData {
 
     // -------------------------------------------------------------
     // Instance Variables
     // -------------------------------------------------------------
-    // TODO: Declare a private array to store the week’s data
-    //       Choose an appropriate type (double[] or int[])
-    //       Create other instance variables as necessary
-    private double[] data;
+    /** Array storing hours of sleep for each day */
+    private double[] sleepData;
 
 
     // -------------------------------------------------------------
     // Constructor
     // -------------------------------------------------------------
     /**
-     * Constructs a WeeklyData object by taking in an array of values
-     * and making a deep copy (element-by-element) into the internal array.
+     * Constructs a WeeklyData object by deep-copying the input array.
      *
-     * @param input an array representing 7 days of data
+     * @param input an array representing hours slept each day
      */
     public WeeklyData(double[] input) {
-        // TODO: (Optional) Check if input is null and handle appropriately
         if (input == null) {
-            data = new double[0];
+            sleepData = new double[0];
         } else {
-            // TODO: Create a new array with the same length as input
-            data = new double[input.length];
-
-            // TODO: Copy each value from input into the internal data array
-            // NOTE: Do NOT do this.data = input; (that would create aliasing)
+            sleepData = new double[input.length];
             for (int i = 0; i < input.length; i++) {
-                data[i] = input[i];
+                sleepData[i] = input[i];
             }
         }
     }
@@ -44,20 +43,15 @@ public class WeeklyData {
     // getTotal
     // -------------------------------------------------------------
     /**
-     * Calculates and returns the total of all values in the week.
+     * Calculates the total number of hours slept during the week.
      *
-     * @return the sum of all values in the data array
+     * @return total sleep hours
      */
     public double getTotal() {
-        // TODO: Create a variable to store the running total
         double total = 0.0;
-
-        // TODO: Use a loop to add each value in the array to the total
-        for (int i = 0; i < data.length; i++) {
-            total += data[i];
+        for (double hours : sleepData) {
+            total += hours;
         }
-
-        // TODO: Return the total
         return total;
     }
 
@@ -66,20 +60,15 @@ public class WeeklyData {
     // getAverage
     // -------------------------------------------------------------
     /**
-     * Calculates and returns the average value for the week.
+     * Calculates the average number of hours slept per day.
      *
-     * @return the average of the values in the array,
-     *         or 0.0 if the array is empty
+     * @return average sleep hours, or 0.0 if no data exists
      */
     public double getAverage() {
-        // TODO: If the array length is 0, return 0.0
-        if (data.length == 0) {
+        if (sleepData.length == 0) {
             return 0.0;
         }
-
-        // TODO: Otherwise, divide the total by the number of elements
-        // Hint: You may call getTotal()
-        return getTotal() / data.length;
+        return getTotal() / sleepData.length;
     }
 
 
@@ -87,22 +76,21 @@ public class WeeklyData {
     // getMax
     // -------------------------------------------------------------
     /**
-     * Finds and returns the highest value in the data array.
+     * Finds the maximum number of hours slept in a single day.
      *
-     * @return the maximum value
+     * @return maximum sleep value
      */
     public double getMax() {
-        // TODO: Assume the first value is the current maximum
-        double max = data[0];
-
-        // TODO: Loop through the rest of the array and update max as needed
-        for (int i = 1; i < data.length; i++) {
-            if (data[i] > max) {
-                max = data[i];
-            }
+        if (sleepData.length == 0) {
+            return 0.0;
         }
 
-        // TODO: Return the maximum value found
+        double max = sleepData[0];
+        for (int i = 1; i < sleepData.length; i++) {
+            if (sleepData[i] > max) {
+                max = sleepData[i];
+            }
+        }
         return max;
     }
 
@@ -111,22 +99,21 @@ public class WeeklyData {
     // getMin
     // -------------------------------------------------------------
     /**
-     * Finds and returns the lowest value in the data array.
+     * Finds the minimum number of hours slept in a single day.
      *
-     * @return the minimum value
+     * @return minimum sleep value
      */
     public double getMin() {
-        // TODO: Assume the first value is the current minimum
-        double min = data[0];
-
-        // TODO: Loop through the rest of the array and update min as needed
-        for (int i = 1; i < data.length; i++) {
-            if (data[i] < min) {
-                min = data[i];
-            }
+        if (sleepData.length == 0) {
+            return 0.0;
         }
 
-        // TODO: Return the minimum value found
+        double min = sleepData[0];
+        for (int i = 1; i < sleepData.length; i++) {
+            if (sleepData[i] < min) {
+                min = sleepData[i];
+            }
+        }
         return min;
     }
 
@@ -135,27 +122,21 @@ public class WeeklyData {
     // toString
     // -------------------------------------------------------------
     /**
-     * Returns a formatted, multi-line String showing each day’s data.
+     * Returns a formatted multi-line String of sleep data.
      *
-     * Example:
-     * Day 1: 4500
-     * Day 2: 6200
-     * Day 3: 5100
-     *
-     * @return a formatted String representing the week’s data
+     * @return formatted String showing sleep per day
      */
     @Override
     public String toString() {
-        // TODO: Create a StringBuilder
         StringBuilder sb = new StringBuilder();
 
-        // TODO: Loop through the data array
-        for (int i = 0; i < data.length; i++) {
-            // TODO: Append each value with a day label (Day 1, Day 2, etc.)
-            sb.append("Day ").append(i + 1).append(": ").append(data[i]).append("\n");
+        for (int i = 0; i < sleepData.length; i++) {
+            sb.append("Day ").append(i + 1)
+              .append(": ")
+              .append(sleepData[i])
+              .append(" hours\n");
         }
 
-        // TODO: Return the completed String
         return sb.toString();
     }
 }
